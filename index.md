@@ -1,4 +1,3 @@
-<link rel="shortcut icon" type="image/png" href="images/cloud.png">
 ---
 layout: default
 title: Distributed Cloud Simulator
