@@ -1,9 +1,10 @@
+<link rel="shortcut icon" type="image/png" href="images/cloud.png">
 ---
 layout: default
 title: Distributed Cloud Simulator
 author: Jean-Claude Charr
 ---
-<link rel="shortcut icon" type="image/x-icon" href="images/cloud.png">
+
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
