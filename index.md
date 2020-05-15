@@ -2,7 +2,6 @@
 layout: default
 title: Distributed Cloud Simulator
 author: Jean-Claude Charr
-image: /images/cloud.png
 ---
 
 
