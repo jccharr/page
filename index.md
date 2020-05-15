@@ -1,5 +1,7 @@
 ---
 layout: default
+title: Distributed Cloud Simulator
+author: Jean-Claude Charr
 ---
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
