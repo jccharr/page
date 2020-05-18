@@ -61,7 +61,7 @@ Warehouse-scale computers (WSCs) are the building blocks of a cloud infrastructu
 servers and has a hierarchical organization as shown in the following figure. A rack consists of a number S of servers, each server has P processors, each processor has C cores, and each core has T threads. A number R of racks form a cell and the WSC consists of N cells.
 </p>
 <p align="center">
-<img alt="The organization of a Warehouse-Scale Computer" src="images/WSC.jpg"/>
+<img alt="The organization of a Warehouse-Scale Computer" src="images/WSC.jpg" width="80%"/>
 </p>
 
 
