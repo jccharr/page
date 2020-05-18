@@ -57,13 +57,13 @@ An application consists of many tasks which can be multi-threaded or service tas
 
 # Simulated cloud infrastructure
 <p style="text-align: justify;text-justify: inter-word;"> 
-Warehouse-scale computers (WSCs) are the building blocks of a cloud infrastructure. A WSC consist of tens of thousands of
-servers and has a hierarchical organization as shown in the following figure. A rack consists of a number S of servers, each server has P processors, each processor has C cores, and each core has T threads. A number R of racks form a cell and the WSC consists of N cells.
+Warehouse-scale computers (WSCs) are the building blocks of a cloud infrastructure. A WSC consists of tens of thousands of
+servers and has a hierarchical organization as shown in the following figure. A rack consists of a number S of servers, each server has P processors, each processor has C cores, and each core has T threads. A number R of racks form a cell and the WSC consists of N cells. Each node in the hierarchy is controled by a manager and their various roles are explained in the following sections.
 </p>
 <p align="center">
 <img alt="The organization of a Warehouse-Scale Computer" src="images/WSC.jpg" width="80%"/>
 </p>
-
+## Warehouse manager
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
