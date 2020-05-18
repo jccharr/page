@@ -71,3 +71,8 @@ servers and has a hierarchical organization as shown in the following figure. A 
 ## Rack manager
 
 ## Server manager
+
+# Install
+
+# Getting started
+
