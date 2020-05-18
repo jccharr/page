@@ -64,16 +64,22 @@ An application consists of many tasks which can be multi-threaded or service tas
 # Simulated cloud infrastructure
 <p style="text-align: justify;text-justify: inter-word;"> 
 Warehouse-scale computers (WSCs) are the building blocks of a cloud infrastructure. A WSC consists of tens of thousands of
-servers and has a hierarchical organization as shown in the following figure. A rack consists of a number S of servers, each server has P processors, each processor has C cores, and each core has T threads. A number R of racks form a cell and the WSC consists of N cells. Each node in the hierarchy is controled by a manager and their various roles are explained in the following sections.
+servers and has a hierarchical organization as shown in the following figure. A rack consists of S servers, each server has P processors, each processor has C cores, and each core has T threads. A number R of racks form a cell and the WSC consists of N cells. Each node in the hierarchy is controled by many software modules called managers which handle the requests of the users and manage the physical components of the simulated cloud.   These managers compose the logical infrastructure of the cloud  and their various roles are explained in the following sections.
 </p>
 <p align="center">
 <img alt="The organization of a Warehouse-Scale Computer" src="images/WSC.jpg" width="80%"/>
 </p>
 
 ## Warehouse manager
+<p style="text-align: justify;text-justify: inter-word;">
+It is the entry point of a WSC. It receives the applications submitted by the clients. For each application, it checks if there are enough resources to execute all the tasks of the submitted application. The requirments of each task in the application are expressed in VCPUs and they must be reserved on the same server. If the WSC has enough resources the required resources are reserved and for each task a VM is deployed with the necessay resources to execute the task. Otherwise, the application is added to the waiting list until enough resources are freed up to satisfy the application's requirments.
+</p>
 
 ## Cell manager
-
+<p style="text-align: justify;text-justify: inter-word;">
+  It manages a number of racks. It is the link between the warehouse manager and the racks managers. All the warehouse requests for servers reservation and tasks submissions are transferred via the Cell manager to the racks.
+  
+</p>
 ## Rack manager
 
 ## Server manager
