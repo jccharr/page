@@ -55,6 +55,15 @@ A service task does not have a predefined set of sets to execute. However, it is
 An application consists of many tasks which can be multi-threaded or service tasks. While the normal tasks of an application with predefined set of stages can communicate via the main process on each task, the service tasks of an application do not exchange any data because the transactions are independent. However, if the same service is deployed by many tasks of an application, in other words the service tasks of an application handle the same type of transactions, a scheduler can be created at the upper level and it will be the point of entry of the transactions. Once the scheduler receives a transaction it will submit it to one service task according to a scheduling policy. 
 </p>
 
+# Simulated cloud infrastructure
+<p style="text-align: justify;text-justify: inter-word;"> 
+Warehouse-scale computers (WSCs) are the building blocks of a cloud infrastructure. A WSC consist of tens of thousands of
+servers and has a hierarchical organization as shown in the following figure. A rack consists of a number S of servers, each server has P processors, each processor has C cores, and each core has T threads. A number R of racks form a cell and the WSC consists of N cells.
+</p>
+<p align="center">
+<img alt="The organization of a Warehouse-Scale Computer" src="images/WSC.jpg"/>
+</p>
+
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
