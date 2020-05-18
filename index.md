@@ -6,8 +6,9 @@ author: Jean-Claude Charr
 
 # Cloud Model
 ## Cloud user
-<div style="align:justify"> 
+<div style="text-align: justify;text-justify: inter-word;"> 
 A cloud user is a person or organization that has access to the cloud and is allowed on demand usage of some of the cloud's resources for a limited time and for a predefined fee (based on the time of usage and the number of used resources). The cloud user reserves resources on the cloud to execute an application.
+
 </div>
 
 ## Cloud resources
