@@ -63,6 +63,7 @@ servers and has a hierarchical organization as shown in the following figure. A 
 <p align="center">
 <img alt="The organization of a Warehouse-Scale Computer" src="images/WSC.jpg" width="80%"/>
 </p>
+
 ## Warehouse manager
 
 ## Cell manager
