@@ -72,15 +72,18 @@ servers and has a hierarchical organization as shown in the following figure. A 
 
 ## Warehouse manager
 <p style="text-align: justify;text-justify: inter-word;">
-It is the entry point of a WSC. It receives the applications submitted by the clients. For each application, it checks if there are enough resources to execute all the tasks of the submitted application. The requirments of each task in the application are expressed in VCPUs and they must be reserved on the same server. If the WSC has enough resources the required resources are reserved and for each task a VM is deployed with the necessay resources to execute the task. Otherwise, the application is added to the waiting list until enough resources are freed up to satisfy the application's requirments.
+It is the entry point of a WSC. It receives the applications submitted by clients. For each application, it checks if there are enough resources to execute all the tasks of the submitted application. The requirments of each task in the application are expressed in number of VCPUs and they must be reserved on the same server because a VM can only be hosted on a single server. If the WSC has enough resources the required resources are reserved and for each task a VM is deployed with the necessay resources to execute the task. Otherwise, the application is added to the waiting list until enough resources are freed up to satisfy the application's requirments.
 </p>
 
 ## Cell manager
 <p style="text-align: justify;text-justify: inter-word;">
   It manages a number of racks. It is the link between the warehouse manager and the racks managers. All the warehouse requests for servers reservation and tasks submissions are transferred via the Cell manager to the racks.
-  
 </p>
+
 ## Rack manager
+<p style="text-align: justify;text-justify: inter-word;">
+It handles the servers in a rack. All the warehouse requests for servers reservation and tasks submissions are transferred from the Cell manager to the servers via the Rack manager. If more than one identical service tasks were deployed on the servers of one rack, the Rack manager can host a dispatcher to dispatch the transactions to the service tasks according to a predifined policy. Therefore, the Rack manager will become the entry point of the transactions submitted to the service tasks.
+</p>
 
 ## Server manager
 
