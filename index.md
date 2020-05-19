@@ -86,7 +86,9 @@ It handles the servers in a rack. All the warehouse requests for servers reserva
 </p>
 
 ## Server manager
-
+<p style="text-align: justify;text-justify: inter-word;">
+  
+</p>
 # Install
 
 # Getting started
