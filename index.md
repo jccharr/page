@@ -136,12 +136,153 @@ To simulate distributed computing, the Application concept was introduced. An ap
 </p>
 
 ```xml
-
+<app>
+  <submissionTime>2</submissionTime>
+  <task>
+    <virtualMachine>
+      <os>Debian</os>
+      <size>750</size>
+      <instructionToBoot>50000</instructionToBoot>
+      <instructionsToTurnOff>50000</instructionsToTurnOff>
+      <parallel>true</parallel>
+    </virtualMachine>
+    <instance>
+      <name>a.small</name>
+      <nbVCPUs>2</nbVCPUs>
+      <memory>4000</memory>
+    </instance>
+    <stage>
+      <type>IO_MEMORY</type>
+      <size>7536478</size>
+    </stage>
+    <stage>
+      <type>EXEC</type>
+      <size>51145</size>
+    </stage>
+    <stage>
+      <type>SEND</type>
+      <source>0</source>
+      <destination>1</destination>
+      <sizeMessage>100</sizeMessage>
+    </stage>
+    <stage>
+      <type>WAIT_RECV</type>
+      <source>1</source>
+      <destination>0</destination>
+      <sizeMessage>100</sizeMessage>
+    </stage>
+    <stage>
+      <type>EXEC</type>
+      <size>101975</size>
+    </stage>
+  </task>
+  <task>
+    <virtualMachine>
+      <os>Debian</os>
+      <size>750</size>
+      <instructionToBoot>50000</instructionToBoot>
+      <instructionsToTurnOff>50000</instructionsToTurnOff>
+      <parallel>true</parallel>
+    </virtualMachine>
+    <instance>
+      <name>a.small</name>
+      <nbVCPUs>2</nbVCPUs>
+      <memory>4000</memory>
+    </instance>
+    <stage>
+      <type>IO_MEMORY</type>
+      <size>7456772</size>
+    </stage>
+    <stage>
+      <type>EXEC</type>
+      <size>60234</size>
+    </stage>
+    <stage>
+      <type>SEND</type>
+      <source>1</source>
+      <destination>0</destination>
+      <sizeMessage>100</sizeMessage>
+    </stage>
+    <stage>
+      <type>WAIT_RECV</type>
+      <source>0</source>
+      <destination>1</destination>
+      <sizeMessage>100</sizeMessage>
+    </stage>
+    <stage>
+      <type>EXEC</type>
+      <size>110005</size>
+    </stage>
+  </task>
+</app>
 ```
 
 <p style="text-align: justify;text-justify: inter-word;">  
 If an application consists of many service tasks, they do not exchange any data because the transactions are independent. The application of service tasks allows the deployment of many service tasks that handle the same type of transactions, at the same time. This redundancy is used when one server does not have enough resources to handle the transactions' load. In this case, a dispatcher, located on a higher-level than the servers, can be the point of entry of the transactions. Once it  receives a transaction, it will submit the transaction to one of the deployed service tasks according to a predefined policy. 
 </p>
+
+```xml
+<app>
+  <submissionTime>2</submissionTime>
+  <task>
+    <virtualMachine>
+      <os>Debian</os>
+      <size>750</size>
+      <instructionToBoot>50000</instructionToBoot>
+      <instructionsToTurnOff>50000</instructionsToTurnOff>
+      <parallel>true</parallel>
+    </virtualMachine>
+    <instance>
+      <name>a.small</name>
+      <nbVCPUs>8</nbVCPUs>
+      <memory>8000</memory>
+    </instance>
+  </task>
+  <task>
+    <virtualMachine>
+      <os>Debian</os>
+      <size>750</size>
+      <instructionToBoot>50000</instructionToBoot>
+      <instructionsToTurnOff>50000</instructionsToTurnOff>
+      <parallel>true</parallel>
+    </virtualMachine>
+    <instance>
+      <name>a.small</name>
+      <nbVCPUs>8</nbVCPUs>
+      <memory>8000</memory>
+    </instance>
+  </task>
+  <transaction>
+    <size>10</size>
+    <responseSize>10</responseSize>
+    <submissionTime>1.7625516688400111</submissionTime>
+    <stage>
+      <type>IO_MEMORY</type>
+      <size>1083482</size>
+    </stage>
+    <stage>
+      <type>EXEC</type>
+      <size>2593392239</size>
+    </stage>
+  </transaction>
+  <transaction>
+    <size>10</size>
+    <responseSize>10</responseSize>
+    <submissionTime>1.9176792525859794</submissionTime>
+    <stage>
+      <type>IO_MEMORY</type>
+      <size>41322</size>
+    </stage>
+    <stage>
+      <type>EXEC</type>
+      <size>54149119470</size>
+    </stage>
+  </transaction>
+  .
+  .
+  .
+</app>
+```
 
 # Simulated cloud infrastructure
 <p style="text-align: justify;text-justify: inter-word;"> 
