@@ -132,7 +132,15 @@ A service task does not have a predefined set of stages to execute. However, it 
 
 ## Application
 <p style="text-align: justify;text-justify: inter-word;"> 
-An application consists of many tasks which can be multi-threaded or service tasks. While the normal tasks of an application with predefined set of stages can communicate via the main process on each task, the service tasks of an application do not exchange any data because the transactions are independent. However, if the same service is deployed by many tasks of an application, in other words the service tasks of an application handle the same type of transactions, a scheduler can be created at the upper level and it will be the point of entry of the transactions. Once the scheduler receives a transaction it will submit it to one service task according to a scheduling policy. 
+To simulate distributed computing, the Application concept was introduced. An application consists of at least one task which can be multi-threaded or service tasks. If an application has more than one regular task with a predefined set of stages, the tasks can communicate with each other via the main process on each task. The main process of a task that has to send some data to another task, must include, as with the MPI interface, a SEND stage where the recipient task and the size of the data to transfer are specified. On the other hand, the task receiving the data from another task, should include a WAIT_RECV stage where the sender task and the size of the data to be received are also specified. The following XML code describes an application consisting of two regular tasks. Each task has five stages and at the third stage, each task sends data to the other one.
+</p>
+
+```xml
+
+```
+
+<p style="text-align: justify;text-justify: inter-word;">  
+If an application consists of many service tasks, they do not exchange any data because the transactions are independent. The application of service tasks allows the deployment of many service tasks that handle the same type of transactions, at the same time. This redundancy is used when one server does not have enough resources to handle the transactions' load. In this case, a dispatcher, located on a higher-level than the servers, can be the point of entry of the transactions. Once it  receives a transaction, it will submit the transaction to one of the deployed service tasks according to a predefined policy. 
 </p>
 
 # Simulated cloud infrastructure
