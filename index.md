@@ -295,7 +295,20 @@ servers and has a hierarchical organization as shown in the following figure. A 
 
 ## Warehouse manager
 <p style="text-align: justify;text-justify: inter-word;">
-It is the entry point of a WSC. It receives the applications submitted by clients. For each application, it checks if there are enough resources to execute all the tasks of the submitted application. The requirements of each task in the application are expressed in number of VCPUs and they must be reserved on the same server because a VM can only be hosted on a single server. If the WSC has enough resources the required resources are reserved and for each task a VM is deployed with the necessary resources to execute the task. Otherwise, the application is added to the waiting list until enough resources are freed up to satisfy the application's requirements.
+It is the entry point of a WSC. It receives the applications submitted by clients. For each application, it checks if there are enough resources to execute all the tasks of the submitted application. The requirements of each task in the application are expressed in number of VCPUs and amount of memory. the resources must be reserved on the same server because a VM can only be hosted on a single server. If the WSC has enough resources the required resources are reserved and for each task a VM is deployed with the necessary resources to execute the task. Otherwise, the application is added to the waiting list until enough resources are freed up to satisfy the application's requirements.
+</p>
+
+### Application deployment procedure
+<p style="text-align: justify;text-justify: inter-word;">
+  The Warehouse manager has an estimate of the available resources on each server. However, these values maybe outdated for many reasons. For example, if a server's resources are underutilized, its server manager might decide to turn off some available resources in order to save energy and thus modifying the number of available VCPUs on this server. The warehouse manager will be eventually informed of this modification but the update would not instantly happen. The information must be transferred from the server to the Rack manager and then to the Cell manager in order to finally arrive to the Warehouse manager. To be able to deploy a submitted application to the WSC, an application deployment procedure consisting of two phases was implemented. During the first phase, the logical components of the cloud try to reserve the requested resources by the Application. If the first phase is a success, the tasks are then deployed onto the reserved resources. Otherwise, the application is added to the waiting list.  
+</p>
+
+<p style="text-align: justify;text-justify: inter-word;">
+  First phase: The Warehouse manager, for every task in the application and according to its local available resources values,  checks if there is a server that can satisfy the task's requirements. If a server was found for every task of the application, the reservation procedure begins, otherwise the application is added to the waiting list. In the reservation procedure, a message is sent to all the selected servers through their Cell managers and Rack managers to reserve them. If by the time the server receives the reservation message, its resources are not available anymore, the Rack manager tries to reserve resources on another server in the rack. If it is not possible, the cell manager tries to reserve a server on another rack. 
+</p>
+
+<p style="text-align: justify;text-justify: inter-word;">
+Second phase: if the first phase was successful, the deployment of the virtual machines for every task of application on the reserved servers begins. Otherwise, the application is added to the waiting list until some resources free up. During this second phase, a message is sent to every reserved server to load the VM image to the memory and boot the virtual machine. Once, it is booted, it starts executing the stages of its task. 
 </p>
 
 ## Cell manager
