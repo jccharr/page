@@ -336,6 +336,8 @@ It handles the resources of the server: processors, memory, network card, disks,
 Once some resources are reserved for a regular task, a virtual machine is booted over these resources and then the stages of the task are successively executed. When all the stages of the task have been executed, the VM is turned off and the task's resources are freed up. Finally, the Rack manager is notified of the termination of the task. On the other hand, for a service task, once the VM is booted, the dispatcher starts submitting the transactions of the application to the task. Upon the reception of a transaction, the task creates a process to execute the transaction's stages. When all the stages of the transaction have been executed, the process handling it is killed and the dispatcher is notified. When all the transactions of an application have been executed, the VM is turned off and the task's resources are freed up.
 </p>
 
+# Server's Resources definition
+
 
 # Install
 
