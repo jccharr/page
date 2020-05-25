@@ -369,28 +369,36 @@ public static void main(String []args) {
     int memoryPerCore=2;  //memory per core in GB
 
     //Memory
+    double totalMemorySize=nbProcs*nbCoresPerProc*memoryPerCore; // total memory size in the server
     Vector<Integer> frequencies=new Vector<Integer>();
-    frequencies.add(new Integer(200));
+    frequencies.add(new Integer(200)); //possible frequencies of the memory in MHz
     Vector<Double> powerPerFrequency=new Vector<Double>();
-    double memoryPowerPerGB=1.5;
-    double staticMemoryPowerPerGB=0.5;
-    double totalMemorySize=nbProcs*nbCoresPerProc*memoryPerCore;
-    powerPerFrequency.add(new Double(nbProcs*nbCoresPerProc*memoryPerCore*memoryPowerPerGB));
+    double dynamicMemoryPowerPerGB=1.5; //power consumed per 1 GB of memory when active
+    double staticMemoryPowerPerGB=0.5;  //power consumed per 1 GB of memory when idle
+    powerPerFrequency.add(new Double(totalMemorySize*dynamicMemoryPowerPerGB));//power consumed by all the memory when active at 200MHz
     PowerAwareMemory memory=new PowerAwareMemory(totalMemorySize*1000,frequencies,0,0.01,totalMemorySize*
                             staticMemoryPowerPerGB,powerPerFrequency);  //size in MBytes, frequencies*64=>transferRate in MB/s
     
-    memory.setMemoryAccessModel(new MemoryAccessModel(memory));
-    memory.setEnergyConsumptionModel(new MemoryEnergyConsumptionModel(memory));
+    memory.setMemoryAccessModel(new MemoryAccessModel(memory)); //set the memory access model
+    memory.setEnergyConsumptionModel(new MemoryEnergyConsumptionModel(memory)); //set the memory energy consumption model
+    
     //Server Manager
-    serverManager = new PowerAwareServerManager(serverName, serverPort, rackName, rackPort);    //PowerAwareServerManager instead of ServerManager
-    SimpleCommunicationModel communicationModel=new SimpleCommunicationModel(10*1000, 0.1,0.1,serverManager );//Bandwidth , propagation time
-    PowerAwareNetworkCard networkCard=new PowerAwareNetworkCard(communicationModel,2,10);   //static and dynamic power in watts
-    networkCard.setEnergyConsumptionModel(new NetworkCardEnergyConsumptionModel(networkCard));
-    //serverManager.setProvisioningPolicy(new EnergyEfficientProvisioningPolicy());
-    serverManager.setProvisioningPolicy(new SimpleProvisioningPolicy());
-    serverManager.setVCPUAllocatingPolicy(new EnergyEfficientVCPUAllocatingPolicy());
-    //Server + Disk
-    server=new PowerAwareServer(serverManager, memory,networkCard, 20.0, 10.0,0);  //timeToWakeUp, powerConsumption, sleepPowerConsumption
+    serverManager = new PowerAwareServerManager(serverName, serverPort, rackName, rackPort); //Initiate the Server manager
+    serverManager.setProvisioningPolicy(new SimpleProvisioningPolicy()); //set the Server manager resource provisioning policy
+    serverManager.setVCPUAllocatingPolicy(new EnergyEfficientVCPUAllocatingPolicy()); //set the Server manager VCPU allocation policy
+    
+    //Network card
+    int bandwidth=10000; //Bandwidth in MB
+    double upperLevelPropagationTime=0.1, lowerLevelPropagationTime=0.1; //Propagation time in the hierarchy in seconds
+    SimpleCommunicationModel communicationModel=new SimpleCommunicationModel(bandwidth, upperLevelPropagationTime, lowerLevelPropagationTime,serverManager ); //Initiate the communication model
+    double staticPower=2, dynamicPower=10;
+    PowerAwareNetworkCard networkCard=new PowerAwareNetworkCard(communicationModel,staticPower,dynamicPower);   //instantiate a network card
+    networkCard.setEnergyConsumptionModel(new NetworkCardEnergyConsumptionModel(networkCard)); set the network card energy consumption model
+    
+    //Server
+    double timeToWakeUp=20; time to change state from asleep to awake in seconds
+    double awakePowerConsumption=10, sleepPowerConsumption=0; power conseumption in each state in Watts
+    server=new PowerAwareServer(serverManager, memory,networkCard, timeToWakeUp, awakePowerConsumption, sleepPowerConsumption);  //
     server.setComputingModel(new ComputingModel(server));
     server.setEnergyConsumptionModel(new ServerEnergyConsumptionModel(server));
     memory.setServer(server);
@@ -438,7 +446,7 @@ public static void main(String []args) {
   }
 
 }
-```xml
+```
 
 # Install
 
