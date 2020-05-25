@@ -372,18 +372,19 @@ public static void main(String []args) {
     double totalMemorySize=nbProcs*nbCoresPerProc*memoryPerCore; // total memory size in the server
     Vector<Integer> frequencies=new Vector<Integer>();
     frequencies.add(new Integer(200)); //possible frequencies of the memory in MHz
+    int defaultFrequencyIndex=0; //Which frequency is selected at the beginning of the simulation 
     Vector<Double> powerPerFrequency=new Vector<Double>();
     double dynamicMemoryPowerPerGB=1.5; //power consumed per 1 GB of memory when active
     double staticMemoryPowerPerGB=0.5;  //power consumed per 1 GB of memory when idle
     powerPerFrequency.add(new Double(totalMemorySize*dynamicMemoryPowerPerGB));//power consumed by all the memory when active at 200MHz
-    PowerAwareMemory memory=new PowerAwareMemory(totalMemorySize*1000,frequencies,0,0.01,totalMemorySize*
-                            staticMemoryPowerPerGB,powerPerFrequency);  //size in MBytes, frequencies*64=>transferRate in MB/s
+    double latency=0.01; //latency in seconds
+    PowerAwareMemory memory=new PowerAwareMemory(totalMemorySize*1000,frequencies,defaultFrequencyIndex,latency, totalMemorySize*staticMemoryPowerPerGB,powerPerFrequency);  //instantiate the memory with a transfer rate in MB/s = frequencies*64
     
     memory.setMemoryAccessModel(new MemoryAccessModel(memory)); //set the memory access model
     memory.setEnergyConsumptionModel(new MemoryEnergyConsumptionModel(memory)); //set the memory energy consumption model
     
     //Server Manager
-    serverManager = new PowerAwareServerManager(serverName, serverPort, rackName, rackPort); //Initiate the Server manager
+    serverManager = new PowerAwareServerManager(serverName, serverPort, rackName, rackPort); //instantiate the Server manager
     serverManager.setProvisioningPolicy(new SimpleProvisioningPolicy()); //set the Server manager resource provisioning policy
     serverManager.setVCPUAllocatingPolicy(new EnergyEfficientVCPUAllocatingPolicy()); //set the Server manager VCPU allocation policy
     
@@ -396,14 +397,16 @@ public static void main(String []args) {
     networkCard.setEnergyConsumptionModel(new NetworkCardEnergyConsumptionModel(networkCard)); set the network card energy consumption model
     
     //Server
-    double timeToWakeUp=20; time to change state from asleep to awake in seconds
-    double awakePowerConsumption=10, sleepPowerConsumption=0; power conseumption in each state in Watts
-    server=new PowerAwareServer(serverManager, memory,networkCard, timeToWakeUp, awakePowerConsumption, sleepPowerConsumption);  //
-    server.setComputingModel(new ComputingModel(server));
-    server.setEnergyConsumptionModel(new ServerEnergyConsumptionModel(server));
+    double timeToWakeUp=20; //time to change state from asleep to awake in seconds
+    double awakePowerConsumption=10, //sleepPowerConsumption=0; power conseumption in each state in Watts
+    server=new PowerAwareServer(serverManager, memory,networkCard, timeToWakeUp, awakePowerConsumption, sleepPowerConsumption);  //instantiate the server
+    server.setComputingModel(new ComputingModel(server)); //set the server's computing model
+    server.setEnergyConsumptionModel(new ServerEnergyConsumptionModel(server)); //set the server's energy consumption model
     memory.setServer(server);
-
-    Disk disk=new Disk(1000,1000, 17);    //size in GBytes , transferRate in Mbits, accessTime in milliseconds
+    
+    //Disk
+    double size=1000, transferRate=1000, accessTime=17; //size in GBytes , transferRate in Mbits, accessTime in milliseconds
+    Disk disk=new Disk(size,transferRate, accessTime);    
     server.addDisk(disk);
 
     for(int i=0;i<nbProcs;i++) {
