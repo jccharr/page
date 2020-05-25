@@ -332,8 +332,10 @@ It handles the servers in a rack. All the warehouse requests for resource reserv
 
 ## Server manager
 <p style="text-align: justify;text-justify: inter-word;">
-  
+It handles the resources of the server: processors, memory, network card, disks, etc. It also alocates these resources to the submitted tasks to execute them. Moreover, the Server manager can run multiple procedures to save energy by putting to sleep some or all of the server's resources. The resource allocation and resource managment policies can be designed to serve various purposes such as performance, responsiveness or energy saving.<br/>
+Once some resources are reserved for a regular task, a virtual machine is booted over these resources and then the stages of the task are successively executed. When all the stages of the task have been executed, the VM is turned off and the task's resources are freed up. Finally, the Rack manager is notified of the termination of the task. On the other hand, for a service task, once the VM is booted, the dispatcher starts submitting the transactions of the application to the task. Upon the reception of a transaction, the task creates a process to execute the transaction's stages. When all the stages of the transaction have been executed, the process handling it is killed and the dispatcher is notified. When all the transactions of an application has been executed, the VM is turned off and the task's resources are freed up.
 </p>
+
 
 # Install
 
