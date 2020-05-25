@@ -294,7 +294,7 @@ servers and has a hierarchical organization as shown in the following figure. A 
 </p>
 <p style="text-align: justify;text-justify: inter-word;"> 
 In the implemented simulator, each node of the hierarchy can only communicate with its parent node or its children via messages. In order, to exchange data with other nodes, the data must transmit via intermediary nodes, according to the hierarchy illustrated in the following figure, to reach their destinations. For example, if a task on server 1 from rack 1 wants to send data to a task on server 2 on rack R, its messages have to successively transit by the Rack manager 1 (parent node), Cell manager 1 and Rack manager R before reaching its destination (server 2 on rack R). This communication scheme imitates real ethernet networks where servers in a rack are interconnected via a switch which in the simulator is represented by the Rack manager, every group of racks are also interconnected via another switch which in the simulator is represented by the Cell manager, etc. Since our distributed simulator uses a pessimestic approach where a process can only execute a local event when its time stamp is lower than the time stamps + lookup of its neighbours, this communication scheme was implemented in order to reduce the dependencies between the processes of the simulator. For example, using this communication scheme, a Server manager only has one neighbor, the Rack manager, instead of having all the servers of the simulation as its neighbors. </p>
-</p>
+
 <p align="center">
 <img alt="The WSC communication scheme" src="images/communicationScheme.svg"/>
 </p>
