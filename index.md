@@ -403,51 +403,46 @@ public static void main(String []args) {
     server.setComputingModel(new ComputingModel(server)); //set the server's computing model
     server.setEnergyConsumptionModel(new ServerEnergyConsumptionModel(server)); //set the server's energy consumption model
     memory.setServer(server);
-    
-    //Disk
-    double size=1000, transferRate=1000, accessTime=17; //size in GBytes , transferRate in Mbits, accessTime in milliseconds
-    Disk disk=new Disk(size,transferRate, accessTime);    
-    server.addDisk(disk);
 
     for(int i=0;i<nbProcs;i++) {
       //Processor
-      CacheMemory l3 =new CacheMemory(12*1000,30); //size in KB and latency in cycles
-      Vector<Double> power_per_PCstate=new Vector<Double>();//in watts
+      Vector<Double> power_per_PCstate=new Vector<Double>(); //processor's power consumption per PC-state in watts
       power_per_PCstate.addAll(Arrays.asList(15.0,7.5,0.0));
-      Vector<Double> delayToWakeUpFrom_PCstate=new Vector<Double>();
-      delayToWakeUpFrom_PCstate.addAll(Arrays.asList(0.0,7.5,15.0));   
-      PowerAwareProcessor processor=new PowerAwareProcessor(server,l3, power_per_PCstate,0,delayToWakeUpFrom_PCstate );
-      processor.setEnergyConsumptionModel(new ProcEnergyConsumptionModel(processor));
+      int defaultPCstateIndex=0;
+      Vector<Double> delayToWakeUpFrom_PCstate=new Vector<Double>(); //processor's delay to pass from a PC_state to the first one in seconds
+      delayToWakeUpFrom_PCstate.addAll(Arrays.asList(0.0,7.5,15.0));
+      CacheMemory l3 =new CacheMemory(12*1000,30); //size in KB and latency in cycles
+      PowerAwareProcessor processor=new PowerAwareProcessor(server,l3, power_per_PCstate, defaultPCstateIndex, delayToWakeUpFrom_PCstate); //instantiate a processor
+      processor.setEnergyConsumptionModel(new ProcEnergyConsumptionModel(processor)); //set the processor's energy consumption model
 
       for(int j=0;j<nbCoresPerProc;j++) {
         //Core
         frequencies=new Vector<Integer>();
-        frequencies.addAll(Arrays.asList(2000,1750,1500,1250,1000));
+        frequencies.addAll(Arrays.asList(2000,1750,1500,1250,1000)); //core's frequencies in MHz
+        defaultFrequencyIndex=0;
         powerPerFrequency=new Vector<Double>();
-        powerPerFrequency.addAll(Arrays.asList(36.94,28.77,22.4,17.45,13.59));
+        powerPerFrequency.addAll(Arrays.asList(36.94,28.77,22.4,17.45,13.59)); //core's power consumption per frequency in watts
         Vector<Double> powerPerCState=new Vector<Double>();
-        powerPerCState.addAll(Arrays.asList(15.0,7.5,0.0));
+        powerPerCState.addAll(Arrays.asList(15.0,7.5,0.0)); //core's power consumption per C-state in watts
 
         Vector<Double> delayToWakeUpFrom_Cstate= new Vector<Double>();
-        delayToWakeUpFrom_Cstate.addAll(Arrays.asList(0.0,7.5,15.0));
-
-        PowerAwareCore core=new PowerAwareCore(frequencies,0,powerPerFrequency,0,powerPerCState,delayToWakeUpFrom_Cstate,1,processor,server); 
-        core.setEnergyConsumptionModel(new CoreEnergyConsumptionModel(core));
-
-        // frequencies, index of frequencies, powerPerFrequency, indexCState, powerPerCState, delayToWakeUpFrom_Cstate, instructions per cycle, processor,server
-        processor.addCore(core);
+        delayToWakeUpFrom_Cstate.addAll(Arrays.asList(0.0,7.5,15.0)); //core's delay to pass from a C_state to the first one in seconds
+        int defaultCStateIndex=0;
+        int nbInstructionsPerCycle=1;
+        PowerAwareCore core=new PowerAwareCore(frequencies,defaultFrequencyIndex,powerPerFrequency,defaultCStateIndex,powerPerCState,delayToWakeUpFrom_Cstate,nbInstructionsPerCycle,processor,server); 
+        core.setEnergyConsumptionModel(new CoreEnergyConsumptionModel(core));  //set core energy consumption model
+        processor.addCore(core); // add core to the processor
       }
-
-      server.addProcessor(processor);
+      server.addProcessor(processor); //add processor to the server
     }
-    serverManager.setLoadHandlingPolicy(new SimpleLoadHandlingPolicy());
+    serverManager.setLoadHandlingPolicy(new SimpleLoadHandlingPolicy()); //set the load handling policy
+    
     //Should be called when all the processors and cores have been added to the server
-    serverManager.setServer(server);
-
+    serverManager.setServerAndStartSimulation(server); // Starts the simulation process of the Server manager
+    
   }catch(IllegalArgumentException e) {
     e.printStackTrace();
   }
-
 }
 ```
 
