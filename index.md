@@ -298,6 +298,7 @@ In the implemented simulator, each node of the hierarchy can only communicate wi
 <p align="center">
 <img alt="The WSC communication scheme" src="images/communicationScheme.svg" width="80%"/>
 </p>
+
 ## Warehouse manager
 <p style="text-align: justify;text-justify: inter-word;">
 It is the entry point of a WSC. It receives the applications submitted by clients. For each application, it checks if there are enough resources to execute all the tasks of the submitted application. The requirements of each task in the application are expressed in number of VCPUs and amount of memory. the resources must be reserved on the same server because a VM can only be hosted on a single server. If the WSC has enough resources the required resources are reserved and for each task a VM is deployed with the necessary resources to execute the task. Otherwise, the application is added to the waiting list until enough resources are freed up to satisfy the application's requirements.
