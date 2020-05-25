@@ -320,6 +320,7 @@ Second phase: if the first phase was successful, the deployment of the virtual m
 <p align="center">
 <img alt="Deployment procedure" src="images/Deployment.svg"/>
 </p>
+
 ## Cell manager
 <p style="text-align: justify;text-justify: inter-word;">
   It manages a number of racks. It is the link between the warehouse manager and the racks managers. All the warehouse requests for resource reservation and tasks submissions are transferred via the Cell manager to the racks.
@@ -337,7 +338,107 @@ Once some resources are reserved for a regular task, a virtual machine is booted
 </p>
 
 # Server's Resources definition
+<p style="text-align: justify;text-justify: inter-word;">
+The server's resources are defined in the main function of a Java class that launches a ServerManager. In the following Java code example, the program takes at least 4 parameters: the server's name or IP address, the server's port number, the Rack manager's name and the Rack manager's port number. These informations are required to connect the Server manager to the Rack manage. The code defines the server's resources and then launches the Server manager.
+</p>
 
+```java
+public static void main(String []args) {
+  if(args.length<4) {
+    System.out.println("Usage: serverName, serverPort, rackName, rackPort, [serverSpecFileName]");
+    System.exit(0);
+  }
+
+  PowerAwareServerManager serverManager=null;
+  PowerAwareServer server=null;
+  String serverName="", rackName="";
+  int serverPort=0, rackPort=0;
+
+  try {
+    serverName=args[0];
+    rackName=args[2];
+    serverPort=Integer.parseInt(args[1]);
+    rackPort=Integer.parseInt(args[3]);
+  }catch(Exception e) {
+    e.printStackTrace();
+    System.out.println("Usage: serverName, serverPort, rackName, rackPort, [serverSpecFileName]");
+    System.exit(0);
+  }
+  try {
+    int nbProcs=2, nbCoresPerProc=4; //number of processors and number of cores per processor
+    int memoryPerCore=2;  //memory per core in GB
+
+    //Memory
+    Vector<Integer> frequencies=new Vector<Integer>();
+    frequencies.add(new Integer(200));
+    Vector<Double> powerPerFrequency=new Vector<Double>();
+    double memoryPowerPerGB=1.5;
+    double staticMemoryPowerPerGB=0.5;
+    double totalMemorySize=nbProcs*nbCoresPerProc*memoryPerCore;
+    powerPerFrequency.add(new Double(nbProcs*nbCoresPerProc*memoryPerCore*memoryPowerPerGB));
+    PowerAwareMemory memory=new PowerAwareMemory(totalMemorySize*1000,frequencies,0,0.01,totalMemorySize*
+                            staticMemoryPowerPerGB,powerPerFrequency);  //size in MBytes, frequencies*64=>transferRate in MB/s
+    
+    memory.setMemoryAccessModel(new MemoryAccessModel(memory));
+    memory.setEnergyConsumptionModel(new MemoryEnergyConsumptionModel(memory));
+    //Server Manager
+    serverManager = new PowerAwareServerManager(serverName, serverPort, rackName, rackPort);    //PowerAwareServerManager instead of ServerManager
+    SimpleCommunicationModel communicationModel=new SimpleCommunicationModel(10*1000, 0.1,0.1,serverManager );//Bandwidth , propagation time
+    PowerAwareNetworkCard networkCard=new PowerAwareNetworkCard(communicationModel,2,10);   //static and dynamic power in watts
+    networkCard.setEnergyConsumptionModel(new NetworkCardEnergyConsumptionModel(networkCard));
+    //serverManager.setProvisioningPolicy(new EnergyEfficientProvisioningPolicy());
+    serverManager.setProvisioningPolicy(new SimpleProvisioningPolicy());
+    serverManager.setVCPUAllocatingPolicy(new EnergyEfficientVCPUAllocatingPolicy());
+    //Server + Disk
+    server=new PowerAwareServer(serverManager, memory,networkCard, 20.0, 10.0,0);  //timeToWakeUp, powerConsumption, sleepPowerConsumption
+    server.setComputingModel(new ComputingModel(server));
+    server.setEnergyConsumptionModel(new ServerEnergyConsumptionModel(server));
+    memory.setServer(server);
+
+    Disk disk=new Disk(1000,1000, 17);    //size in GBytes , transferRate in Mbits, accessTime in milliseconds
+    server.addDisk(disk);
+
+    for(int i=0;i<nbProcs;i++) {
+      //Processor
+      CacheMemory l3 =new CacheMemory(12*1000,30); //size in KB and latency in cycles
+      Vector<Double> power_per_PCstate=new Vector<Double>();//in watts
+      power_per_PCstate.addAll(Arrays.asList(15.0,7.5,0.0));
+      Vector<Double> delayToWakeUpFrom_PCstate=new Vector<Double>();
+      delayToWakeUpFrom_PCstate.addAll(Arrays.asList(0.0,7.5,15.0));   
+      PowerAwareProcessor processor=new PowerAwareProcessor(server,l3, power_per_PCstate,0,delayToWakeUpFrom_PCstate );
+      processor.setEnergyConsumptionModel(new ProcEnergyConsumptionModel(processor));
+
+      for(int j=0;j<nbCoresPerProc;j++) {
+        //Core
+        frequencies=new Vector<Integer>();
+        frequencies.addAll(Arrays.asList(2000,1750,1500,1250,1000));
+        powerPerFrequency=new Vector<Double>();
+        powerPerFrequency.addAll(Arrays.asList(36.94,28.77,22.4,17.45,13.59));
+        Vector<Double> powerPerCState=new Vector<Double>();
+        powerPerCState.addAll(Arrays.asList(15.0,7.5,0.0));
+
+        Vector<Double> delayToWakeUpFrom_Cstate= new Vector<Double>();
+        delayToWakeUpFrom_Cstate.addAll(Arrays.asList(0.0,7.5,15.0));
+
+        PowerAwareCore core=new PowerAwareCore(frequencies,0,powerPerFrequency,0,powerPerCState,delayToWakeUpFrom_Cstate,1,processor,server); 
+        core.setEnergyConsumptionModel(new CoreEnergyConsumptionModel(core));
+
+        // frequencies, index of frequencies, powerPerFrequency, indexCState, powerPerCState, delayToWakeUpFrom_Cstate, instructions per cycle, processor,server
+        processor.addCore(core);
+      }
+
+      server.addProcessor(processor);
+    }
+    serverManager.setLoadHandlingPolicy(new SimpleLoadHandlingPolicy());
+    //Should be called when all the processors and cores have been added to the server
+    serverManager.setServer(server);
+
+  }catch(IllegalArgumentException e) {
+    e.printStackTrace();
+  }
+
+}
+```xml
 
 # Install
 
