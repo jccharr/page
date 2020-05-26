@@ -456,9 +456,9 @@ The Java code of the simulator is organized as follows:
   </li>
   <li> events package: this package contains just subclasses of the Event class. These subclasses define specific types of events and define how they must be processed by the Server manager. The user of the simulator can add to this package new event subclasses to handle new event types.
   </li> 
-  <li> examples package:
+  <li> examples package: this package contains the launchers of the Warehouse, Cell, rack and Server managers. These launchers take many arguments such as the name of the machine on which to run the coresponding manager and which port number to use for communication. More information on the arguments of each launcher can be found in the Example section below. The Warehouse manager launcher requires an XML file which describes the applications that the simulator should execute over the simulated cloud. The structure of the XML file was described in the Application section above. In this package, the user of the simulator must define the architecture of the cloud's servers. I should be done in the Server manager launcher as described in the previous section. It must be noted that the cloud can consist of heterogeneous servers. However, in reality most clouds are homogeneous.    
   </li>
-  <li> examples models:
+  <li> examples models: this package contains the models which define the behavior of each component of the server. For example, the server has memory, processors and a network card. The compute model defines how the processor simulates the execution of a stage. The communication model defines how the network card sends a message, etc. There are also models to compute the energy consumption of each component during a time period. Simple models were implemented for each component but the user of the simulator can implement new ones that are more adapted to his needs.
   </li>
   <li> examples policies:
   </li>
