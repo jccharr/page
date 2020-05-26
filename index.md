@@ -446,7 +446,28 @@ public static void main(String []args) {
 }
 ```
 
-# Install
+# Package organization
+<p style="text-align: justify;text-justify: inter-word;">
+The Java code of the simulator is organized as follows:
+<ul>
+  <li> core package: This package contains the core classes of the simulator. The user of the simulator should not modify the content of this package.</li>
+  <li> energy packahe: This package contains some subclasses of classes from the core package. These subclasses contain new attributes and methods that are essential for tracking the energy consumption of every component of a server. Moreover, this package contains procedures to manage the resources of the servers and the tasks running over them in order reduce the overall energy consumption of the cloud. For example, it includes procedures to migrate a task from one server to another and to put some resources to sleep. The user of the simulator is not supposed to modify the content of this package too.</li>
+  <li> enumerations package: This package contains all the enumerations used by the simulator such as the simulation states, the task states, the stage types, etc. The user of the simulator can add new values to these enumerations to handle new stage types or task states, etc.
+  </li>
+  <li> events package: this package contains just subclasses of the Event class. These subclasses define specific types of events and define how they must be processed by the Server manager. The user of the simulator can add to this package new event subclasses to handle new event types.
+  </li> 
+  <li> examples package:
+  </li>
+  <li> examples models:
+  </li>
+  <li> examples policies:
+  </li>
+  <li> examples stages:
+  </li>
+  <li> examples stats:
+  </li>
+</ul>
+</p>
 
 # Getting started
 
