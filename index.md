@@ -464,7 +464,7 @@ The Java code of the simulator is organized as follows:
   </li>
   <li> stages package: This package contains just subclasses of the Stage class. These subclasses define specific types of stages and how they must be processed by the Server manager. The most common stages of a task were implemented, such as compute, memory access, message send and receive stages. The user of the simulator can add to this package new stage subclasses if the ones available do not cover its needs. The user can also modify how a stage is processed by the Server manager.
   </li>
-  <li> stats package: This package contains the classes that defines which data must be retrieved from the simulation, which statistics should be applied on them and how the results should be displayed for the user of the simulator. The latter can modify those three steps according to his needs.
+  <li> stats package: This package contains the classes that define which data must be retrieved from the simulation, which statistical analysis should be applied on them and how the results should be displayed for the user of the simulator. The latter can modify those three steps according to his needs.
   </li>
 </ul>
 </p>
