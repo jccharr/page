@@ -498,6 +498,10 @@ To start using this simulator the source code must be downloaded on the filesyst
   To remove the compiled .class files execute : <span style="font-weight: bold">./make clean</span>
 </p>
 
+# Run a simulation on the local machine
+
+# Run a simulation on a cluster
+
 # blabla
 
 # blabla
