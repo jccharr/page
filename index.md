@@ -475,9 +475,9 @@ The Java code of the simulator is located in the src directory and is organized 
 <p style="text-align: justify;text-justify: inter-word;">
 The following softwares are required to run the simulator :
   <ul>
-    <li> Operating System: The simulator has been tested on systems running OS X or linux operating systems. The simulator was not tested on the windows operating system but it should work with some tweaking. </li> 
-    <li> Git: The git software is required to clone the source code from github but the it can also be downloaded as an archive without git, see next paragraph.</li>
-    <li> Java Development Kit (JDK): To compile the source code and run the simulator a recent JDK must be installed on the machine.</li>
+    <li> <span style="font-weight: bold">Operating System:</span> The simulator has been tested on systems running OS X or linux operating systems. The simulator was not tested on the windows operating system but it should work with some tweaking. </li> 
+    <li> <span style="font-weight: bold">Git:</span> The git software is required to clone the source code from github but the it can also be downloaded as an archive without git, see next paragraph.</li>
+    <li> <span style="font-weight: bold">Java Development Kit (JDK):</span> To compile the source code and run the simulator a recent JDK must be installed on the machine.</li>
   </ul>  
 </p>
 
@@ -485,17 +485,17 @@ The following softwares are required to run the simulator :
 <p style="text-align: justify;text-justify: inter-word;">
 To start using this simulator the source code must be downloaded on the filesystem of the machine (or machines) that will be running the simulation. The source can be downloaded using one of the following two ways:
   <ol>
-    <li> From a terminal, execute the following GIT instruction, the git software must be already installed on the machine:<br/>git clone https://github.com/jccharr/DistributedCloudSimulator.git</li>
+    <li> From a terminal, execute the following GIT instruction, the git software must be already installed on the machine:<br/><span style="font-weight: bold">git clone https://github.com/jccharr/DistributedCloudSimulator.git</span></li>
     <li> Or just click on the following link to download an archive containing the source files and then uncompress the downloaded archive: <a href="https://github.com/jccharr/DistributedCloudSimulator/zipball/master"> download link</a></li> 
   </ol>
 </p>
 
 # Compile 
 <p style="text-align: justify;text-justify: inter-word;">
-  In a terminal change the current directory to the uncompressed directory: cd DistributedCloudSimulator <br/>
-  To compile just execute the following instruction from a terminal: ./make <br/>
+  In a terminal change the current directory to the uncompressed directory: <span style="font-weight: bold">cd DistributedCloudSimulator</span> <br/>
+  To compile just execute the following instruction from a terminal: <span style="font-weight: bold">./make</span> <br/>
   The .class files will be generated in the bin directory. <br/>
-  To remove the compiled .class files execute : ./make clean
+  To remove the compiled .class files execute : <span style="font-weight: bold">./make clean</span>
 </p>
 
 # blabla
