@@ -476,8 +476,9 @@ The Java code of the simulator is located in the src directory and is organized 
 The following softwares are required to run the simulator :
   <ul>
     <li> <span style="font-weight: bold">Operating System:</span> The simulator has been tested on systems running OS X or linux operating systems. The simulator was not tested on the windows operating system but it should work with some tweaking. </li> 
-    <li> <span style="font-weight: bold">Git:</span> The git software is required to clone the source code from github but the it can also be downloaded as an archive without git, see next paragraph.</li>
+    <li> <span style="font-weight: bold">Git:</span> The git software (available per default on linux based systems) is required to clone the source code from github but it can also be downloaded as an archive without git, see next paragraph.</li>
     <li> <span style="font-weight: bold">Java Development Kit (JDK):</span> To compile the source code and run the simulator a recent JDK must be installed on the machine.</li>
+    <li> <span style="font-weight: bold">Java make:</span> The make utility (available per default on linux based systems) is used to compile le source files of the simulator. However, the shell commands found in the Makefile can be used to compile the code without this utility.</li>
   </ul>  
 </p>
 
@@ -493,12 +494,23 @@ To start using this simulator the source code must be downloaded on the filesyst
 # Compile 
 <p style="text-align: justify;text-justify: inter-word;">
   In a terminal change the current directory to the uncompressed directory: <span style="font-weight: bold">cd DistributedCloudSimulator</span> <br/>
-  To compile just execute the following instruction from a terminal: <span style="font-weight: bold">./make</span> <br/>
+  To compile just execute the following instruction from a terminal: <span style="font-weight: bold">make</span> <br/>
   The .class files will be generated in the bin directory. <br/>
-  To remove the compiled .class files execute : <span style="font-weight: bold">./make clean</span>
+  To remove the compiled .class files execute : <span style="font-weight: bold">make clean</span>
 </p>
 
 # Run a simulation on the local machine
+<p style="text-align: justify;text-justify: inter-word;">
+To run the simplest simulation with this simulator, at least four processes should be launched, one for each manager type: Warehouse, Cell, Rack and Server managers. In the following example, a cloud containing just one Rack consisting of two servers is simulated. Each of the follwing instructions should be executed in its own terminal tab and launches one of the managers. Since all the processes in this example will be executed on the local machine, the machine name is equal to 127.0.0.1 for all the processes and they only use differents ports to communicate with each other. As explained in Server's Resources definition section, the ServerLauncher class should be edited to specify the specifications of the servers.
+  
+  <ol>
+    <li>To launch the Warehouse manager: <span style="font-weight: bold">java bin/examples/WarehouseLauncher 127.0.0.1 961 apps.xml</span><br/>The Warehouse manager uses the port 961 to communicate with the other components. The app.xml file contains the definition of the tasks that will be executed by the simulated cloud as explained in the Task and Application sections.</li>
+    <li>To launch a Cell manager: <span style="font-weight: bold">java bin/examples/CellLauncher 127.0.0.1 962 127.0.0.1 961 </span><br/>The Cell manager uses the port 962 to communicate with the other components and requires the name of the machine running the upper node in the hierarchy (Warehouse manager) and its port number to connect to it. </li>
+    <li>To launch a Rack manager connected to the Cell manager above:<span style="font-weight: bold">java bin/examples/RackLauncher 127.0.0.1 963 127.0.0.1 962 2 </span><br/>As for the Cell manager, it requires the name of the machine running the upper node in the hierarchy (Cell manager) and its port number to connect to it. Moreover, the user of the simulator must specify in the last argument, how manu servers will be connected to this Rack manager, in this example just 2 servers. </li>
+    <li>To launch the first Server manager connected to the Rack manager above: <span style="font-weight: bold">java bin/examples/ServerLauncher 127.0.0.1 964 127.0.0.1 963 </span><br/>Similar to the other manager, it  requires the name of the machine running the upper node in the hierarchy (Rack manager) and its port number to connect to it.</li>
+    <li>To launch the second Server manager connected to the Rack manager above: <span style="font-weight: bold">java bin/examples/ServerLauncher 127.0.0.1 965 127.0.0.1 963</span></li>
+  </ol>
+</p>
 
 # Run a simulation on a cluster
 
