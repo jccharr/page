@@ -469,9 +469,9 @@ The Java code of the simulator is located in the src directory and is organized 
 </ul>
 </p>
 
-## Getting started 
+# Getting started 
 
-# Sytsem requirements
+## Sytsem requirements
 <p style="text-align: justify;text-justify: inter-word;">
 The following softwares are required to run the simulator :
   <ul>
@@ -482,7 +482,7 @@ The following softwares are required to run the simulator :
   </ul>  
 </p>
 
-# Download
+## Download
 <p style="text-align: justify;text-justify: inter-word;">
 To start using this simulator the source code must be downloaded on the filesystem of the machine (or machines) that will be running the simulation. The source can be downloaded using one of the following two ways:
   <ol>
@@ -491,7 +491,7 @@ To start using this simulator the source code must be downloaded on the filesyst
   </ol>
 </p>
 
-# Compile 
+## Compile 
 <p style="text-align: justify;text-justify: inter-word;">
   In a terminal change the current directory to the uncompressed directory: <span style="font-weight: bold">cd DistributedCloudSimulator</span> <br/>
   To compile just execute the following instruction from a terminal: <span style="font-weight: bold">make</span> <br/>
@@ -499,7 +499,7 @@ To start using this simulator the source code must be downloaded on the filesyst
   To remove the compiled .class files execute : <span style="font-weight: bold">make clean</span>
 </p>
 
-# Run a simulation on the local machine
+## Run a simulation on the local machine
 <p style="text-align: justify;text-justify: inter-word;">
 To run the simplest simulation with this simulator, at least four processes should be launched, one for each manager type: Warehouse, Cell, Rack and Server managers. In the following example, a cloud containing just one Rack consisting of two servers is simulated. Each of the follwing instructions should be executed in its own terminal tab and launches one of the managers. Since all the processes in this example will be executed on the local machine, the machine name is equal to 127.0.0.1 for all the processes and they only use differents ports to communicate with each other. As explained in Server's Resources definition section, the ServerLauncher class should be edited to specify the specifications of the servers.
   
@@ -510,9 +510,14 @@ To run the simplest simulation with this simulator, at least four processes shou
     <li>To launch the first Server manager connected to the Rack manager above: <span style="font-weight: bold">java bin/examples/ServerLauncher 127.0.0.1 964 127.0.0.1 963 </span><br/>Similar to the other manager, it  requires the name of the machine running the upper node in the hierarchy (Rack manager) and its port number to connect to it.</li>
     <li>To launch the second Server manager connected to the Rack manager above: <span style="font-weight: bold">java bin/examples/ServerLauncher 127.0.0.1 965 127.0.0.1 963</span></li>
   </ol>
+  
+Off course the simulation of a cloud consisting of many racks and tens of servers per rack, would not be practical if every manager should be lauched on its own as above. In the next section, an automated launch process is explained to launch the simulator over a cluster and to simulate a larger cloud.
 </p>
 
-# Run a simulation on a cluster
+## Run a simulation on a cluster
+<p style="text-align: justify;text-justify: inter-word;">
+  The names of the machines to be used by the simulator should be listed in a file, one name per line. The same name can be added more than once into the file, one manager process will be launched for each addition. In the following example, this file is called the machines file. The script addPortsToMachineFile.py adds a port number to each machine name in the machines file. 
+</p>
 
 # blabla
 
