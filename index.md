@@ -448,7 +448,7 @@ public static void main(String []args) {
 
 # Package organization
 <p style="text-align: justify;text-justify: inter-word;">
-The Java code of the simulator is organized as follows:
+The Java code of the simulator is located in the src directory and is organized as follows:
 <ul>
   <li> <span style="font-weight: bold">core package: </span>This package contains the core classes of the simulator. The user of the simulator should not modify the content of this package.</li>
   <li> <span style="font-weight: bold">energy packahe: </span>This package contains some subclasses of classes from the core package. These subclasses contain new attributes and methods that are essential for tracking the energy consumption of every component of a server. Moreover, this package contains procedures to manage the resources of the servers and the tasks running over them in order reduce the overall energy consumption of the cloud. For example, it includes procedures to migrate a task from one server to another and to put some resources to sleep. The user of the simulator is not supposed to modify the content of this package too.</li>
@@ -469,13 +469,33 @@ The Java code of the simulator is organized as follows:
 </ul>
 </p>
 
-# Getting started
+## Getting started 
+
+# Sytsem requirements
+<p style="text-align: justify;text-justify: inter-word;">
+The following softwares are required to run the simulator :
+  <ul>
+    <li> Operating System: The simulator has been tested on systems running OS X or linux operating systems. The simulator was not tested on the windows operating system but it should work with some tweaking. </li> 
+    <li> Git: The git software is required to clone the source code from github but the it can also be downloaded as an archive without git, see next paragraph.</li>
+    <li> Java Development Kit (JDK): To compile the source code and run the simulator a recent JDK must be installed on the machine.</li>
+  </ul>  
+</p>
+
+# Download
 <p style="text-align: justify;text-justify: inter-word;">
 To start using this simulator the source code must be downloaded on the filesystem of the machine (or machines) that will be running the simulation. The source can be downloaded using one of the following two ways:
   <ol>
     <li> From a terminal, execute the following GIT instruction, the git software must be already installed on the machine:<br/>git clone https://github.com/jccharr/DistributedCloudSimulator.git</li>
     <li> Or just click on the following link to download an archive containing the source files and then uncompress the downloaded archive: <a href="https://github.com/jccharr/DistributedCloudSimulator/zipball/master"> download link</a></li> 
   </ol>
+</p>
+
+# Compile 
+<p style="text-align: justify;text-justify: inter-word;">
+  In a terminal change the current directory to the uncompressed directory: cd DistributedCloudSimulator <br/>
+  To compile just execute the following instruction from a terminal: ./make <br/>
+  The .class files will be generated in the bin directory. <br/>
+  To remove the compiled .class files execute : ./make clean
 </p>
 
 # blabla
