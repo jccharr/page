@@ -473,7 +473,7 @@ The Java code of the simulator is organized as follows:
 <p style="text-align: justify;text-justify: inter-word;">
 To start using this simulator the source code must be downloaded on the filesystem of the machine (or machines) that will be running the simulation. The source can be downloaded using one of the following two ways:
   <ol>
-    <li> From a terminal, execute the following GIT instruction, the git software must be already installed on the machine : git clone https://github.com/jccharr/DistributedCloudSimulator.git</li>
+    <li> From a terminal, execute the following GIT instruction, the git software must be already installed on the machine:<br/>git clone https://github.com/jccharr/DistributedCloudSimulator.git</li>
     <li> Or just click on the following link to download an archive containing the source files and then uncompress the downloaded archive: <a href="https://github.com/jccharr/DistributedCloudSimulator/zipball/master"> download link</a></li> 
   </ol>
 </p>
