@@ -508,10 +508,7 @@ To run the simplest simulation with this simulator, at least four processes shou
     <li>To launch a Cell manager: <span style="font-weight: bold">java bin/examples/CellLauncher 127.0.0.1 962 127.0.0.1 961 </span><br/>The Cell manager uses the port 962 to communicate with the other components and requires the name of the machine running the upper node in the hierarchy (Warehouse manager) and its port number to connect to it.</li>
     <li>To launch a Rack manager connected to the Cell manager above: <span style="font-weight: bold">java bin/examples/RackLauncher 127.0.0.1 963 127.0.0.1 962 2 </span><br/>As for the Cell manager, it requires the name of the machine running the upper node in the hierarchy (Cell manager) and its port number to connect to it. Moreover, the user of the simulator must specify in the last argument, how manu servers will be connected to this Rack manager, in this example just 2 servers. </li>
     <li>To launch the first Server manager connected to the Rack manager above: <span style="font-weight: bold">java bin/examples/ServerLauncher 127.0.0.1 964 127.0.0.1 963 </span><br/>Similar to the other manager, it  requires the name of the machine running the upper node in the hierarchy (Rack manager) and its port number to connect to it.</li>
-    <li>To launch the second Server manager connected to the Rack manager above: 
-      ```shell
-      java bin/examples/ServerLauncher 127.0.0.1 965 127.0.0.1 963
-      ```
+    <li>To launch the second Server manager connected to the Rack manager above: <span style="font-weight: bold">java bin/examples/ServerLauncher 127.0.0.1 965 127.0.0.1 963</span>
     </li>
   </ol>
   
