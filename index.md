@@ -508,7 +508,11 @@ To run the simplest simulation with this simulator, at least four processes shou
     <li>To launch a Cell manager: <span style="font-weight: bold">java bin/examples/CellLauncher 127.0.0.1 962 127.0.0.1 961 </span><br/>The Cell manager uses the port 962 to communicate with the other components and requires the name of the machine running the upper node in the hierarchy (Warehouse manager) and its port number to connect to it.</li>
     <li>To launch a Rack manager connected to the Cell manager above: <span style="font-weight: bold">java bin/examples/RackLauncher 127.0.0.1 963 127.0.0.1 962 2 </span><br/>As for the Cell manager, it requires the name of the machine running the upper node in the hierarchy (Cell manager) and its port number to connect to it. Moreover, the user of the simulator must specify in the last argument, how manu servers will be connected to this Rack manager, in this example just 2 servers. </li>
     <li>To launch the first Server manager connected to the Rack manager above: <span style="font-weight: bold">java bin/examples/ServerLauncher 127.0.0.1 964 127.0.0.1 963 </span><br/>Similar to the other manager, it  requires the name of the machine running the upper node in the hierarchy (Rack manager) and its port number to connect to it.</li>
-    <li>To launch the second Server manager connected to the Rack manager above: <span style="font-weight: bold">java bin/examples/ServerLauncher 127.0.0.1 965 127.0.0.1 963</span></li>
+    <li>To launch the second Server manager connected to the Rack manager above: 
+      ```shell
+      java bin/examples/ServerLauncher 127.0.0.1 965 127.0.0.1 963
+      ```
+    </li>
   </ol>
   
 Off course the simulation of a cloud consisting of many racks and tens of servers per rack, would not be practical if every manager should be lauched on its own as above. In the next section, an automated launch process is explained to launch the simulator over a cluster and to simulate a larger cloud.
@@ -527,8 +531,9 @@ python launchScript.py cells=1 racks=1 servers=2 machinesFile=machinesFileWithPo
 <br/>
 
 If the user would like to simulate many applications' senarios on the same cloud architecture, we have developped another python script called "loop_script.py" that takes almost the same parameters as the launch script. However, instead of an apps description file, it takes a directory containing the files describing the apps. The script launches a simulation with each apps description file in the directory. The simulations are executed successively, one after the other. A file called "loop_lock" is used to detect if the current simulation is finished and to launch the next simulation. This script uses the launch script to launch each simulation. The following command is an example for launching a series of simulations on the same cloud infrastructure consisting of 1 cell, 1 rack per cell and 10 servers per rack: 
-
+```shell
 python loop_script.py  cells=1 racks=1 servers=10 machinesFile=machinesFileWithPorts appsDescriptionDirectory=appsDirectory outputDirectory=out
+```
 
 </p>
 
