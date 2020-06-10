@@ -521,18 +521,14 @@ Off course the simulation of a cloud consisting of many racks and tens of server
  <span style="font-weight: bold">The machines running the simulation: </span>The names of the machines to be used by the simulator should be listed in a file, one name per line. The same name can be added more than once into the file, one manager process will be launched for each occurence. In the following example, this file is called machinesFile. The script addPortsToMachinesFile.py takes the machine file as argument, associates a port number to each machine name in the machines file and saves them in a new file called "machinesFileWithPorts". Each line of this new file has the following format: machineFileName portNumber. If the same machine name appears more than once in the first file, the script will associate a different port number for each occurence.<br/>
  
 <span style="font-weight: bold">Launching the simulator: </span> To launch the simulation on the reserved machines, the launch script ("launchScript.py") should be executed. It taskes the numbers of cells, racks per cell and servers per rack as input. It also requires the machines file with the ports numbers, the applications' description XML file and an optional output directory. The following command is an example for simulating a cloud consisting of 1 cell, 1 rack per cell and 2 servers per rack: <br/>
-
-python launchScript.py cells=1 racks=1 servers=2 machinesFile=machinesFileWithPorts appsDescriptionFile=45000_variable_20.xml outputDirectory=out
-
+```shell
+python launchScript.py cells=1 racks=1 servers=2 machinesFile=machinesFileWithPorts appsDescriptionFile=apps.xml outputDirectory=out
+```
 <br/>
 
-If the user would like to simulate many applications' senarios on the same cloud architecture, we have developped another python script called "loop_script.py" that takes almost the same parameters as the launch script.  
+If the user would like to simulate many applications' senarios on the same cloud architecture, we have developped another python script called "loop_script.py" that takes almost the same parameters as the launch script. However, instead of an apps description file, it takes a directory containing the files describing the apps. The script launches a simulation with each apps description file in the directory. The simulations are executed successively, one after the other. A file called "loop_lock" is used to detect if the current simulation is finished and to launch the next simulation. This script uses the launch script to launch each simulation. The following command is an example for launching a series of simulations on the same cloud infrastructure consisting of 1 cell, 1 rack per cell and 10 servers per rack: 
+
+python loop_script.py  cells=1 racks=1 servers=10 machinesFile=machinesFileWithPorts appsDescriptionDirectory=appsDirectory outputDirectory=out
+
 </p>
 
-# blabla
-
-# blabla
-
-# blabla
-
-# blabla
