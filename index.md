@@ -516,7 +516,17 @@ Off course the simulation of a cloud consisting of many racks and tens of server
 
 ## Run a simulation on a cluster
 <p style="text-align: justify;text-justify: inter-word;">
-  The names of the machines to be used by the simulator should be listed in a file, one name per line. The same name can be added more than once into the file, one manager process will be launched for each addition. In the following example, this file is called the machines file. The script addPortsToMachineFile.py adds a port number to each machine name in the machines file. 
+<span style="font-weight: bold">Requirements: </span> In this section, it is assumed that the machines that are supposed to run the simulation has been reserved by the user of the simulator and that he can ssh from one machine to the other without requiring the input of the password. Moreover, it is assumed that those machines share the same network file system (NFS). Finally, it is assumed that the user has the permissions to execute the simulator over these machines and to write the output on the NFS.<br/>
+ 
+ <span style="font-weight: bold">The machines running the simulation: </span>The names of the machines to be used by the simulator should be listed in a file, one name per line. The same name can be added more than once into the file, one manager process will be launched for each occurence. In the following example, this file is called machinesFile. The script addPortsToMachinesFile.py takes the machine file as argument, associates a port number to each machine name in the machines file and saves them in a new file called "machinesFileWithPorts". Each line of this new file has the following format: machineFileName portNumber. If the same machine name appears more than once in the first file, the script will associate a different port number for each occurence.<br/>
+ 
+<span style="font-weight: bold">Launching the simulator: </span> To launch the simulation on the reserved machines, the launch script ("launchScript.py") should be executed. It taskes the numbers of cells, racks per cell and servers per rack as input. It also requires the machines file with the ports numbers, the applications' description XML file and an optional output directory. The following command is an example for simulating a cloud consisting of 1 cell, 1 rack per cell and 2 servers per rack: <br/>
+
+python launchScript.py cells=1 racks=1 servers=2 machinesFile=machinesFileWithPorts appsDescriptionFile=45000_variable_20.xml outputDirectory=out
+
+<br/>
+
+If the user would like to simulate many applications' senarios on the same cloud architecture, we have developped another python script called "loop_script.py" that takes almost the same parameters as the launch script.  
 </p>
 
 # blabla
