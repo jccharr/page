@@ -1,8 +1,3 @@
-# page
-A distributed Cloud Simulator
-
-# Getting started 
-
 ## Sytsem requirements
 <p style="text-align: justify;text-justify: inter-word;">
 The following softwares are required to run the simulator :
