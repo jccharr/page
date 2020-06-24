@@ -1,3 +1,5 @@
+This page presents briefly how to install the simulator and run an example. For more information go to this link : https://jccharr.github.io/page/
+
 ## Sytsem requirements
 <p style="text-align: justify;text-justify: inter-word;">
 The following softwares are required to run the simulator :
