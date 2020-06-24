@@ -471,7 +471,7 @@ The Java code of the simulator is located in the src directory and is organized 
 
 # Getting started 
 
-## Sytsem requirements
+## System requirements
 <p style="text-align: justify;text-justify: inter-word;">
 The following softwares are required to run the simulator :
   <ul>
